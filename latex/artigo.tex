@@ -1,0 +1,146 @@
+
+\documentclass[utf8]{frontiersSCNS} % for Science, Engineering and Humanities and Social Sciences articles
+%\documentclass[utf8]{frontiersHLTH} % for Health articles
+%\documentclass[utf8]{frontiersFPHY} % for Physics and Applied Mathematics and Statistics articles
+
+%\setcitestyle{square} % for Physics and Applied Mathematics and Statistics articles
+\usepackage{url,hyperref,lineno,microtype,subcaption}
+\usepackage[onehalfspacing]{setspace}
+
+\linenumbers
+
+
+% Leave a blank line between paragraphs instead of using \\
+
+
+\def\keyFont{\fontsize{8}{11}\helveticabold }
+\def\firstAuthorLast{} %use et al only if is more than 1 author
+\def\Authors{Guilherme R. Graeff\,$^{1}$}
+% Affiliations should be keyed to the author's name with superscript numbers and be listed as follows: Laboratory, Institute, Department, Organization, City, State abbreviation (USA, Canada, Australia), and Country (without detailed address information such as city zip codes or street names).
+% If one of the authors has a change of address, list the new address below the correspondence details using a superscript symbol and use the same symbol to indicate the author in the author list.
+\def\Address{$^{1}$Structural Bioinformatics and Computational Biology Lab - SBCB, Universidade Federal do Rio Grande do Sul, Porto Alegre, RS, Brasil. }
+% The Corresponding Author should be marked with an asterisk
+% Provide the exact contact address (this time including street name and city zip code) and email of the corresponding author
+\def\corrAuthor{Guilherme Rafael Graeff}
+
+\def\corrEmail{guilherme.graeff@ufrgs.br}
+
+
+
+
+\begin{document}
+\onecolumn
+\firstpage{1}
+
+\title[Relatório]{Relatório: \textit{Protein-Ligand Scoring with Convolutional Neural Networks} - Avaliação da tarefa de Virtual Screening} 
+
+\author[\firstAuthorLast ]{\Authors} %This field will be automatically populated
+\address{} %This field will be automatically populated
+\correspondance{} %This field will be automatically populated
+
+\extraAuth{}% If there are more than 1 corresponding author, comment this line and uncomment the next one.
+%\extraAuth{corresponding Author2 \\ Laboratory X2, Institute X2, Department X2, Organization X2, Street X2, City X2 , State XX2 (only USA, Canada and Australia), Zip Code2, X2 Country X2, email2@uni2.edu}
+
+
+\maketitle
+
+% Abstract aquii
+
+% 1. Descrição da área (etapa 1) 
+
+% 2. Apresentação do problema (etapa 2) 
+
+% 3. Descrição dos dados utilizados (etapa 3) 
+
+% 4. Apresentação das técnicas (etapa 4) 
+
+% 5. Discussão de resultados (etapa 5)
+
+% \begin{abstract}
+
+
+
+% %%% Leave the Abstract empty if your article does not require one, please see the Summary Table for full details.
+% \section{}
+
+% \tiny
+%  \keyFont{ \section{Palavras Chave:} Rede Neural Convolucional, Virtual Screening, Machine Learning, Scoring Function} %All article types: you may provide up to 8 keywords; at least 5 are mandatory.
+% \end{abstract}
+
+\section{Introdução}
+
+Este trabalho faz parte da avaliação da disciplina de Algoritmos Para A Bioinformática E Biologia Computacional. Compreende uma apresentação sobre uma aplicação de Redes Neurais Convolucionais para a tarefa de \textit{Virtual Screening} \cite{plscnn}. Explorando a abordagem utilizada para a representação dos dados de estrutura molecular, analisando os \textit{datasets} escolhidos para o treinamento do modelo e verificando os resultados obtidos pelo trabalho. 
+
+O trabalho referência possui dois conjuntos de treinamento com objetivos distintos: um para a predição de pose e o outro para \textit{virtual screening}. Este relatório analisa o desenvolvimento do modelo treinado nos dados referentes ao \textit{Virtual Screening}. A aplicação de algoritmos está presente em diversas etapas daquele trabalho, seja na preparação dos dados, aplicação de ferramentas, desenvolvimento e avaliação do modelo ou até mesmo em etapas de automatização do processo. Esta integração entre algoritmo e problema de pesquisa biológico adquire complexidade de ambos os campos do conhecimento, contribuindo para o objetivo deste relatório, explicar esta aplicação especifica.
+
+O restante do texto está organizado da seguinte forma: a próxima seção apresenta a área de Aprendizado de Máquina e \textit{Virtual Screening}. Na seção 3 são apresentados os problemas da pesquisa . A descrição dos dados utilizados esta presente na Seção 4. A seção 5 está dedicada a apresentação do modelo e à otimização do mesmo. Em seguida, são discutidos os resultados do trabalho na seção 6. A Seção 7 conclui o relatório.
+
+\section{Contextualização} %Descrição da Área
+
+Esta seção apresenta conceitos presentes no trabalho, acompanhado de uma breve explicação importante para a compreensão da técnica utilizada. 
+
+\subsection{Aprendizado de Máquina - Redes Neurais Convolucionais}
+
+Rede Neural Artificial \cite{neural_networks} é uma técnica de Aprendizado de Máquina capaz de compreender padrões presentes em determinado conjunto de dados, possui conceitos inspirados em neurônios biológicos, possui também a capacidade de aprender a partir de uma função de erro. O objeto de estudo do trabalho minimiza a perda logística multinomial utilizando uma variante da descida gradiente estocástica (SGD) e \textit{backpropagation} para o treinamento. Uma Rede Neural Convolucional (CNN) \cite{lecun2015deep} é uma rede neural que possui camadas de convolução e camadas \textit{pooling}, esta técnica é amplamente utilizada para o reconhecimento de imagens no campo da Visão Computacional\cite{lecun2015deep}. A convolução consegue captar informação conformacional do dado, como por exemplo arestas de objetos em uma imagem, o mesmo se aplica quando o dado possui mais dimensões. Já a camada de \textit{pooling} é capaz de reduzir a dimensionalidade do dado para que operações sejam realizadas neste 'menor' espaço, ou seja, esta seria a entrada para a rede neural totalmente conectada no fim da arquitetura da rede. A convolução consegue capturar as características que definem o modelo, então não é necessária a extração de \textit{features} relevantes do modelo.
+
+\subsection{Atracamento molecular com Smina}
+
+O algoritrmo utilizado para \textit{Docking} molecular foi o \textit{Smina}\cite{smina}, uma implementação derivada do Autodock Vina \cite{Trott2010AutoDockVina}. Neste contexto, dois conceitos são importantes para a identificação de um exemplo positivo e um exemplo negativo, são chamadas \textit{decoy} aqueles que são exemplos negativos pois são moléculas que não possuem afinidade com o receptor, ao contrário das moléculas ativas que possuem afinidade com o receptor. Um 'Alvo' por sua vez é a molécula receptora do ligante, esta fica estática durante o \textit{docking}.
+O que são alvos?
+O que são Actiive Molecules?
+O que são decoys?
+
+
+
+Falar sobre o Autodock Vina Scoring Function utilizado através do Smina.
+
+
+\section{Desafios na Aplicação de CNNs ao Virtual Screening} %Apresentação do problema
+Reforça o objetivo principal do trabalho, explorar o campo de estudos
+
+Utilizar algoritmos de \textit{machine learning} como função de score recebeu destaque em pesquisas, explorar novos métodos se fez necessário para o avanço da pesquisa na área. 
+
+Falar especificamente sobre o problema de docking talvez, da scoring function, por que utilizar esta técnica?
+
+
+
+\section{Características e Preparação dos Conjuntos de Dados} %Descrição dos dados utilizados
+Há mais de um conjunto de dados utilizado no trabalho, por conta das diferentes tarefas que se busca realizar, este trabalho apenas explica os dados utilizados para a tarefa de \textit{Virtual Screening.}
+
+\subsection{Dados de treinamento}
+
+A tarefa de \textit{Virtual Screening} faz uso do Databese of Usefull Decoys - Enhenced (DUD-E)\cite{Mysinger2012DUDE}. São 102 alvos(proteínas), 20000 moléculas ativas(exemplos positivos) e mais de um milhão de moléculas do tipo \textit{decoy}(exemplo negativo). Este banco de dados não possui a cristalografia da pose dos ligantes, embora possua uma referência do complexo disponível.
+
+\subsubsection{Gerando poses para treinamento}
+
+São geradas poses de ligantes para moléculas ativas e \textit{decoy} utilizando \textit{Docing with Smina}, \textit{Smina} utiliza a função de score do \textit{Autodock Vina }\cite{smina}. A molécula é posicionada na posição de referência do alvo, o \textit{docking} acontece em uma caixa que possui 8\AA \  centrada à este ligante de referência. Caso não exista um ligante de referência, então é utilizado um \textit{script} que define a posição da caixa.
+
+Os ligantes são atracados com a referência utilizando os argumentos padrão do \textit{smina} para os parâmetros \textit{exhaustiveness} e \textit{sampling}. Então é selecionada a pose com o melhor ranking definido pela função de score do \textit{Autodock Vina}. O tamanho final dos dados de treinamento são de 22.645 exemplos positivos e 1.407.141 exemplos negativos. O valor expressivo de exemplos negativos se dá melo maior número de \textit{decoy} presente no conjunto de dados. 
+
+\subsection{Dados de validação}
+
+Ainda 
+
+\section{Apresentação da técnica}
+
+Utilizar Funções de Score baseadas em Redes Neurais Convolucionais é uma maneira compreensiva de representar a estrutura tridimensional de uma interação proteína e ligante. A técnica em questão utiliza um \textit{grid} de densidade de átomos \cite{plscnn} gerados através da estrutura, a biblioteca \textit{libmolgrid} \cite{sunseri2019libmolgridgpuacceleratedmolecular} é responsável pela transformação dos dados. Este tipo de modelo consegue aprender as principais características, relativas ao atracamento, da interação entre proteína e ligante \cite{plscnn}. Para a tarefa de \textit{Virtual Screening} é treinada e otimizada para diferenciar ligantes e não-ligantes conhecidos. A técnica abordada no trabalho demonstra competitividade em relação a outras funções de \textit{scoring}.
+O modelo foi otimizado utilizando a técnica de \textit{clustered cross-validation}
+
+O trabalho também apresenta uma maneira de visualizar os resultados obtidos  
+
+
+\section{Discussão de resultados}
+Resultados aqui, comparações retiradas do próprio trabalho, detalhadas e comentadas
+
+
+\section{Conclusão}
+
+Este trabalho 
+Conclui o relatório com uma reflexão simples, sobre o processo de aprendizagem, se referindo a dificuldade na realização do trabalho, sobre a mudança de planos, e sobre a apresentação e compreensão do conteúdo. 
+
+\bibliographystyle{plain} % for Science, Engineering and Humanities and Social Sciences articles, for Humanities and Social Sciences articles please include page numbers in the in-text citations
+%\bibliographystyle{frontiersinHLTH&FPHY} % for Health, Physics and Mathematics articles
+\bibliography{test}
+
+
+\end{document}
