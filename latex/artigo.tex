@@ -32,7 +32,7 @@
 \onecolumn
 \firstpage{1}
 
-\title[Relatório]{Relatório: \textit{Protein-Ligand Scoring with Convolutional Neural Networks} - Avaliação da tarefa de Virtual Screening} 
+\title[Relatório]{Relatório: \textit{Protein-Ligand Scoring with Convolutional Neural Networks} - Avaliação da Tarefa de Virtual Screening} 
 
 \author[\firstAuthorLast ]{\Authors} %This field will be automatically populated
 \address{} %This field will be automatically populated
@@ -71,9 +71,8 @@
 
 Este trabalho faz parte da avaliação da disciplina de Algoritmos Para A Bioinformática E Biologia Computacional. Compreende uma apresentação sobre uma aplicação de Redes Neurais Convolucionais para a tarefa de \textit{Virtual Screening} \cite{plscnn}. Explorando a abordagem utilizada para a representação dos dados de estrutura molecular, analisando os \textit{datasets} escolhidos para o treinamento do modelo e verificando os resultados obtidos pelo trabalho. 
 
-O trabalho referência possui dois conjuntos de treinamento com objetivos distintos: um para a predição de pose e o outro para \textit{virtual screening}. Este relatório analisa o desenvolvimento do modelo treinado nos dados referentes ao \textit{Virtual Screening}. A aplicação de algoritmos está presente em diversas etapas daquele trabalho, seja na preparação dos dados, aplicação de ferramentas, desenvolvimento e avaliação do modelo ou até mesmo em etapas de automatização do processo. Esta integração entre algoritmo e problema de pesquisa biológico adquire complexidade de ambos os campos do conhecimento, contribuindo para o objetivo deste relatório, explicar esta aplicação especifica.
 
-O restante do texto está organizado da seguinte forma: a próxima seção apresenta a área de Aprendizado de Máquina e \textit{Virtual Screening}. Na seção 3 são apresentados os problemas da pesquisa . A descrição dos dados utilizados esta presente na Seção 4. A seção 5 está dedicada a apresentação do modelo e à otimização do mesmo. Em seguida, são discutidos os resultados do trabalho na seção 6. A Seção 7 conclui o relatório.
+O restante do texto está organizado da seguinte forma: a próxima seção apresenta a área de Aprendizado de Máquina e \textit{Docking} Molecular. A descrição dos dados utilizados esta presente na Seção 3. A seção 4 está dedicada a apresentação da aplicação. Em seguida, são discutidos os resultados do trabalho na seção 5. Enfim, a seção 6 conclui o relatório.
 
 \section{Contextualização} %Descrição da Área
 
@@ -81,27 +80,13 @@ Esta seção apresenta conceitos presentes no trabalho, acompanhado de uma breve
 
 \subsection{Aprendizado de Máquina - Redes Neurais Convolucionais}
 
-Rede Neural Artificial \cite{neural_networks} é uma técnica de Aprendizado de Máquina capaz de compreender padrões presentes em determinado conjunto de dados, possui conceitos inspirados em neurônios biológicos, possui também a capacidade de aprender a partir de uma função de erro. O objeto de estudo do trabalho minimiza a perda logística multinomial utilizando uma variante da descida gradiente estocástica (SGD) e \textit{backpropagation} para o treinamento. Uma Rede Neural Convolucional (CNN) \cite{lecun2015deep} é uma rede neural que possui camadas de convolução e camadas \textit{pooling}, esta técnica é amplamente utilizada para o reconhecimento de imagens no campo da Visão Computacional\cite{lecun2015deep}. A convolução consegue captar informação conformacional do dado, como por exemplo arestas de objetos em uma imagem, o mesmo se aplica quando o dado possui mais dimensões. Já a camada de \textit{pooling} é capaz de reduzir a dimensionalidade do dado para que operações sejam realizadas neste 'menor' espaço, ou seja, esta seria a entrada para a rede neural totalmente conectada no fim da arquitetura da rede. A convolução consegue capturar as características que definem o modelo, então não é necessária a extração de \textit{features} relevantes do modelo.
+Rede Neural Artificial \cite{neural_networks} é uma técnica de Aprendizado de Máquina capaz de compreender padrões presentes em determinado conjunto de dados, possui conceitos inspirados em neurônios biológicos, possui também a capacidade de aprender a partir de uma função de erro. O objeto de estudo do trabalho minimiza a perda logística multinomial utilizando uma variante da descida gradiente estocástica (SGD) e \textit{backpropagation} para o treinamento. Uma Rede Neural Convolucional (CNN) \cite{lecun2015deep} é uma rede neural que possui camadas de convolução e camadas de \textit{pooling}, esta técnica é amplamente utilizada para o reconhecimento de imagens no campo da Visão Computacional\cite{lecun2015deep}. 
 
-\subsection{Atracamento molecular com Smina}
+A convolução consegue captar informação conformacional do dado, como por exemplo arestas de objetos em uma imagem, o mesmo se aplica quando o dado possui mais dimensões. Já a camada de \textit{pooling} é capaz de reduzir a dimensionalidade do dado para que operações sejam realizadas neste 'menor' espaço, ou seja, esta seria a entrada para a rede neural totalmente conectada no fim da arquitetura da rede. A convolução consegue capturar as características que definem o modelo, então não é necessária a extração de \textit{features} relevantes do mesmo.
 
-O algoritrmo utilizado para \textit{Docking} molecular foi o \textit{Smina}\cite{smina}, uma implementação derivada do Autodock Vina \cite{Trott2010AutoDockVina}. Neste contexto, dois conceitos são importantes para a identificação de um exemplo positivo e um exemplo negativo, são chamadas \textit{decoy} aqueles que são exemplos negativos pois são moléculas que não possuem afinidade com o receptor, ao contrário das moléculas ativas que possuem afinidade com o receptor. Um 'Alvo' por sua vez é a molécula receptora do ligante, esta fica estática durante o \textit{docking}.
-O que são alvos?
-O que são Actiive Molecules?
-O que são decoys?
+\subsection{\textit{Docking} molecular com Smina}
 
-
-
-Falar sobre o Autodock Vina Scoring Function utilizado através do Smina.
-
-
-\section{Desafios na Aplicação de CNNs ao Virtual Screening} %Apresentação do problema
-Reforça o objetivo principal do trabalho, explorar o campo de estudos
-
-Utilizar algoritmos de \textit{machine learning} como função de score recebeu destaque em pesquisas, explorar novos métodos se fez necessário para o avanço da pesquisa na área. 
-
-Falar especificamente sobre o problema de docking talvez, da scoring function, por que utilizar esta técnica?
-
+A ferramenta utilizada para \textit{Docking} molecular foi o \textit{Smina}\cite{smina}, uma implementação derivada do \textit{Autodock Vina} \cite{Trott2010AutoDockVina}, este algoritmo que a partir dos dados estruturais do alvo e do ligante retorna as melhores poses para o ligante. Neste contexto, dois conceitos são importantes para a identificação de um exemplo positivo e um exemplo negativo, são chamadas \textit{decoy} aqueles que são exemplos de de controle negativos pois são moléculas que não possuem interagem com o receptor, ao contrário das moléculas ativas que possuem afinidade e interagem com o receptor. Um 'Alvo' por sua vez é a molécula receptora do ligante, esta fica estática durante o processo de \textit{docking}.
 
 
 \section{Características e Preparação dos Conjuntos de Dados} %Descrição dos dados utilizados
@@ -109,34 +94,46 @@ Há mais de um conjunto de dados utilizado no trabalho, por conta das diferentes
 
 \subsection{Dados de treinamento}
 
-A tarefa de \textit{Virtual Screening} faz uso do Databese of Usefull Decoys - Enhenced (DUD-E)\cite{Mysinger2012DUDE}. São 102 alvos(proteínas), 20000 moléculas ativas(exemplos positivos) e mais de um milhão de moléculas do tipo \textit{decoy}(exemplo negativo). Este banco de dados não possui a cristalografia da pose dos ligantes, embora possua uma referência do complexo disponível.
+A tarefa de \textit{Virtual Screening} faz uso do Databese of Usefull Decoys - Enhenced (DUD-E)\cite{Mysinger2012DUDE}. São 102 alvos(proteínas), 20000 moléculas ativas e mais de um milhão de moléculas do tipo \textit{decoy}. Este banco de dados não possui a cristalografia da pose dos ligantes, embora possua uma referência do complexo disponível.
 
 \subsubsection{Gerando poses para treinamento}
 
-São geradas poses de ligantes para moléculas ativas e \textit{decoy} utilizando \textit{Docing with Smina}, \textit{Smina} utiliza a função de score do \textit{Autodock Vina }\cite{smina}. A molécula é posicionada na posição de referência do alvo, o \textit{docking} acontece em uma caixa que possui 8\AA \  centrada à este ligante de referência. Caso não exista um ligante de referência, então é utilizado um \textit{script} que define a posição da caixa.
+São geradas poses de ligantes para moléculas ativas e \textit{decoy} utilizando \textit{Docing with Smina}, \textit{Smina} utiliza a função de score do \textit{Autodock Vina }\cite{smina}. A molécula é posicionada na posição de referência do alvo, e o \textit{docking} acontece em uma caixa que possui 8\AA \  centrada à este ligante de referência. Caso não exista um ligante de referência, então é utilizado um \textit{script} que define a posição da caixa.
 
 Os ligantes são atracados com a referência utilizando os argumentos padrão do \textit{smina} para os parâmetros \textit{exhaustiveness} e \textit{sampling}. Então é selecionada a pose com o melhor ranking definido pela função de score do \textit{Autodock Vina}. O tamanho final dos dados de treinamento são de 22.645 exemplos positivos e 1.407.141 exemplos negativos. O valor expressivo de exemplos negativos se dá melo maior número de \textit{decoy} presente no conjunto de dados. 
 
-\subsection{Dados de validação}
+\subsection{Conjuntos de testes independentes}
 
-Ainda 
+O trabalho opta por avaliar a acurácia da classificação com um conjunto de dados de teste independente, garantindo que dados utilizados no treinamento não estejam presentes no teste. Dos dois conjuntos de dados escolhidos para o teste da tarefa de \textit{Virtual Screening}, um foi gerado através do  \textit{ChEMBL} por Riniker e Landrum \cite{Riniker2013}, seguidos por Heikamp e Bajorath \cite{Heikamp2011}. O outro conjunto de dados é um subconjunto dos dados presentes em \textit{maximum unbiased validation (MUV) dataset}\cite{Rohrer2009} que é baseado nos dados de bioatividade presentes no PubChem.
 
-\section{Apresentação da técnica}
+Estes conjuntos de testes independentes ainda são filtrados, antes que o modelo seja testado. Por exemplo, dentre outras técnicas, uma delas remove quaisquer alvos que possuam 80\% ou mais de identidade de sequência com um alvo de treinamento. Destes dados, apenas fazem parte do conjunto final de testes aqueles que possuem o complexo de ligação contendo o alvo disponível no \textit{Protein Data Bank}\cite{berman2000protein} . Estas estruturas são utilizadas para gerar poses atracadas em um sítio de ligação conhecido.
 
-Utilizar Funções de Score baseadas em Redes Neurais Convolucionais é uma maneira compreensiva de representar a estrutura tridimensional de uma interação proteína e ligante. A técnica em questão utiliza um \textit{grid} de densidade de átomos \cite{plscnn} gerados através da estrutura, a biblioteca \textit{libmolgrid} \cite{sunseri2019libmolgridgpuacceleratedmolecular} é responsável pela transformação dos dados. Este tipo de modelo consegue aprender as principais características, relativas ao atracamento, da interação entre proteína e ligante \cite{plscnn}. Para a tarefa de \textit{Virtual Screening} é treinada e otimizada para diferenciar ligantes e não-ligantes conhecidos. A técnica abordada no trabalho demonstra competitividade em relação a outras funções de \textit{scoring}.
-O modelo foi otimizado utilizando a técnica de \textit{clustered cross-validation}
+Após a curagem dos dados, os conjunto de testes independentes para a tarefa de \textit{Virtual Screening} consiste de 13 alvos provenientes de Riniker e Landrum ChEMBL \cite{Riniker2013}, e 9 alvos provenientes do conjunto MUV\cite{Rohrer2009}.
 
-O trabalho também apresenta uma maneira de visualizar os resultados obtidos  
+\section{Reflexões sobre a aplicação }
+
+\subsection{Entendendo a utilização de um Grid}
+A biblioteca utilizada para realizar a transformação dos dados em um \textit{grid} possui ligações em \textit{Python} através do pacote de código aberto \textit{libmolgrid} \cite{sunseri2019libmolgridgpuacceleratedmolecular}. Este \textit{grid} é um \textit{array} multidimensional, este \textit{array} prove uma distribuição contínua da entrada.
+
+\subsection{Utilizando rede neural convolutiva}
+Utilizar Funções de Score baseadas em Redes Neurais Convolucionais traz uma maneira abrangente de representar a estrutura tridimensional de uma interação proteína e ligante. A técnica em questão utiliza um \textit{grid} de densidade de átomos \cite{plscnn} gerados a partir da estrutura, a biblioteca \textit{libmolgrid} \cite{sunseri2019libmolgridgpuacceleratedmolecular} é responsável pela transformação dos dados. Este tipo de modelo consegue aprender as principais características, relativas ao atracamento, da interação entre proteína e ligante \cite{plscnn}. Para a tarefa de \textit{Virtual Screening} é treinada e otimizada para diferenciar ligantes e não-ligantes conhecidos. A técnica abordada no trabalho demonstra competitividade em relação a outras funções de \textit{scoring}. O modelo foi otimizado utilizando a técnica de \textit{clustered cross-validation}
 
 
 \section{Discussão de resultados}
-Resultados aqui, comparações retiradas do próprio trabalho, detalhadas e comentadas
+
+Ao avaliar a tarefa de \textit{Virtual Screening} são considerados dois casos, o primeiro leva em consideração apenas a pose que está no topo do ranking de poses atracadas utilizando o \textit{Vina}\cite{smina} (\textit{single-pose prediction}). No segundo dos casos o modelo seleciona de todas as posições de atracamento disponíveis do ligante(multi-pose prediction). O modelo utiliza a a seguinte métrica, área de baixo da curva (AUC) \textit{Receiveroperating characteristic} (ROC),  AUC = 1 representa um classificador perfeito e AUX = 0.5 indica que o modelo não é melhor do que a escolha soluções aleatórias.
+
+\subsection{Utilizando dados de treinamento}
+É feita uma análise isolada, apenas com os dados do DUD-E\cite{Mysinger2012DUDE}, resultando em CNN \textit{scoring} superar o Vina com AUC de 0.85 contra 0.68 porém dependente deste \textit{dataset}, modelo não tão generalista. Também é realizada uma análise que combina os conjuntos de dados utilizados no treinamento do modelo referente a tarefa de predição de pose. Estes testes evidenciam que há diferença ao utilizar um modelo para classificar outro \textit{dataset}. A combinação dos dados para o treinamento de um modelo combinado, com o fim de o modelo se tornar mais generalista, utiliza a proporção 2:1 de dados presentes no conjunto DUD-E e CSAR\cite{dunbar2011csar}. A versão que usa os dados combinados atinge uma AUC de 0.83. Amostras \textit{outliers} se destacaram por ser muito bem avaliada quando utilizados apenas dados do DUD-E e em contra partida de um se sair mal avaliada ao ser classificada pelo modelo que utilizou os dados combinados. 
+
+\subsection{Utilizando conjuntos de testes independentes}
+Com os modelos treinados então são utilizados ambos DUD-E quanto a combinação dele com o CSAR para analisar os resultados. O modelo é então é avaliado nos conjuntos de testes ChEMBL e MUV. Estes \textit{datasets} são mais desafiadores, para o ChEMBL os resultados são: Vina 0.67,  0.64 e 0.78, DUD-E CNN 0.71, 0.80 e 0.86. Para o MUV: Vina 0.55, 0.50 e 0.52. O modelo traz a reflexão sobre a influência da construção e escolha do conjunto de dados, neste caso específico por conta da diferença na avaliação dos modelos, pode se concluir que a construção do dado pode influenciar, então diferentes abordagens para a construção dos \textit{decoys} podem trazer diferentes resultados.
 
 
 \section{Conclusão}
 
-Este trabalho 
-Conclui o relatório com uma reflexão simples, sobre o processo de aprendizagem, se referindo a dificuldade na realização do trabalho, sobre a mudança de planos, e sobre a apresentação e compreensão do conteúdo. 
+Este trabalho apresenta o tema de Redes Neurais Convolucionais utilizadas em biologia estrutural, uma área multidisciplinar que envolve profundo conhecimento tanto sobre computação quanto sobre biologia. A ideia inicial do trabalho seria realizar a reprodução do artigo selecionado, a possibilidade de reprodução não obtiveram sucesso ao se deparar com a complexidade referente a esta tarefa. Então o trabalho tomou uma forma que busca contextualizar os colegas quanto a utilização de CNN em dados que possuam forma que permita a sua utilização, estudando um pouco o formato de entrada utilizado no trabalho de \textit{M. Ragoza }\cite{plscnn}.
+O relatório é uma acaba se tornando uma ferramenta de reflexão, não só sobre o artigo objeto de estudo, mas também sobre o processo de aprendizagem, se referindo a dificuldade na realização do trabalho, sobre a mudança de planos, e sobre a apresentação e compreensão do conteúdo.
 
 \bibliographystyle{plain} % for Science, Engineering and Humanities and Social Sciences articles, for Humanities and Social Sciences articles please include page numbers in the in-text citations
 %\bibliographystyle{frontiersinHLTH&FPHY} % for Health, Physics and Mathematics articles
