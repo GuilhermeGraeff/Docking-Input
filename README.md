@@ -1,6 +1,6 @@
 ## Trabalho de algoritmos para bioinformática...
 
-Na pasta 'apresentacao' se encontra a apresentação. A mesma ainda não está finalizada. <-------------------
+Na pasta 'apresentacao' se encontra a apresentação.
 
 Na pasta 'latex' se encontra o fonte do relatório, juntamente com o pdf do mesmo.
 
